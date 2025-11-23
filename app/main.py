@@ -104,6 +104,25 @@ async def login(request: LoginRequest, db: Session = Depends(get_db)):
     access_token = create_access_token(data={"sub": user.id})
     return LoginResponse(access_token=access_token)
 
+@app.post("/v1/auth/signup")
+async def signup(request: LoginRequest, db: Session = Depends(get_db)):
+    """Create new user account"""
+    import bcrypt
+    
+    existing = db.query(User).filter(User.email == request.email).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="Email already registered")
+    
+    user = User(
+        email=request.email,
+        hashed_password=bcrypt.hashpw(request.password.encode(), bcrypt.gensalt()).decode(),
+        tier="free"
+    )
+    db.add(user)
+    db.commit()
+    
+    return {"message": "User created successfully", "email": user.email}
+
 @app.post("/v1/auth/api-keys", response_model=APIKeyResponse)
 async def create_api_key(
     request: APIKeyCreate,
