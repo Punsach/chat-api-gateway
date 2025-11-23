@@ -1,6 +1,34 @@
 # Chat API Gateway
 
-Production-grade API gateway with authentication, rate limiting, and streaming chat completions. Built to demonstrate backend engineering skills for growth roles at OpenAI, Anthropic, and similar companies.
+🚀 **[Live Demo](https://chat-api-gateway-production.up.railway.app/docs)** | 📦 **[GitHub](https://github.com/Punsach/chat-api-gateway)**
+
+Production-grade API gateway with authentication, rate limiting, and streaming chat completions.
+
+**Try it live:** https://chat-api-gateway-production.up.railway.app
+
+## ✨ Quick Start (Live API)
+```bash
+# 1. Create an account
+curl -X POST https://chat-api-gateway-production.up.railway.app/v1/auth/signup \
+  -H "Content-Type: application/json" \
+  -d '{"email": "your@email.com", "password": "yourpassword"}'
+
+# 2. Login and get token
+curl -X POST https://chat-api-gateway-production.up.railway.app/v1/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "your@email.com", "password": "yourpassword"}'
+
+# 3. Try the chat API
+curl -X POST https://chat-api-gateway-production.up.railway.app/v1/chat/completions \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"messages": [{"role": "user", "content": "Hello!"}], "stream": false}'
+```
+
+Or explore the interactive docs: **[/docs](https://chat-api-gateway-production.up.railway.app/docs)**
+
+---
+
 
 ## 🚀 Features
 
