@@ -1,9 +1,12 @@
 # app/rate_limiter.py
 import redis
 import time
+import os
 from typing import Tuple
 
-redis_client = redis.Redis(host='localhost', port=6379, decode_responses=True)
+# Use environment variable in production
+REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
+redis_client = redis.from_url(REDIS_URL, decode_responses=True)
 
 class RateLimiter:
     """Token bucket rate limiter with Redis"""
